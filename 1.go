@@ -41,7 +41,7 @@ func main() {
 			sentence, _ = in.ReadString('\n')
 			words := strings.Split(sentence, " ")
 			name := strings.Trim(words[0], ":")
-			// scores[name] += 0
+			scores[name] += 0
 			suspect := strings.Trim(words[1], " ")
 			if suspect == "I" && words[2] == "am" {
 				suspect = name
