@@ -5,8 +5,8 @@ TEST_OUT = './test_process.out'
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-f', '--file', type=str, required=True)
-    parser.add_argument('-t', '--test', type=str, required=True)
+    parser.add_argument('-f', '--file', type=str, required=True, help='Golang programm to test')
+    parser.add_argument('-t', '--test', type=str, required=True, help='.zip archive with tests and answers')
     parser.add_argument('-n', '--nonstop', action='store_true', default=False)
     parser.add_argument('-s', '--silent', action='store_true', default=False)    
     args = parser.parse_args()
@@ -15,9 +15,6 @@ if __name__ == '__main__':
 
         if args.file.endswith('.go'):
             args.file = args.file[:-3]
-
-        if os.path.exists(args.file):
-            os.remove(args.file)
 
         if os.path.exists('./' + args.file+'.go'):
             comleted_proc=subprocess.run(['go', 'build', '-o', args.file, './' + args.file + '.go']) 
