@@ -55,5 +55,4 @@ if __name__ == '__main__':
 
     if os.path.exists(TEST_DIR):
         os.remove(TEST_OUT)
-        os.remove(args.file)
         shutil.rmtree(TEST_DIR)
