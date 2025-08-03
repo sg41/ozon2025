@@ -2,6 +2,7 @@ import zipfile, argparse, os, subprocess, shutil
 
 TEST_DIR = './extracted_test_files/'
 TEST_OUT = './test_process.out'
+TEST_APP = './test_process'
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -17,7 +18,7 @@ if __name__ == '__main__':
             args.file = args.file[:-3]
 
         if os.path.exists('./' + args.file+'.go'):
-            comleted_proc=subprocess.run(['go', 'build', '-o', args.file, './' + args.file + '.go']) 
+            comleted_proc=subprocess.run(['go', 'build', '-o', TEST_APP, './' + args.file + '.go']) 
             if comleted_proc.returncode != 0:
                 print("Build error")
                 exit()
@@ -33,7 +34,7 @@ if __name__ == '__main__':
         for file in sorted([f for f in files if not f.endswith('.a')], key=lambda x: int(x)):
             with open(TEST_DIR + file, 'r') as f:
                 with open(TEST_OUT, 'w') as out:
-                    subprocess.run(['./' + args.file], stdin=f, stdout=out)
+                    subprocess.run([TEST_APP], stdin=f, stdout=out)
                     with open(TEST_OUT, 'r') as out:
                         with open(TEST_DIR + file + '.a', 'r') as a:
                             result = out.read()
@@ -55,4 +56,5 @@ if __name__ == '__main__':
 
     if os.path.exists(TEST_DIR):
         os.remove(TEST_OUT)
+        os.remove(TEST_APP)
         shutil.rmtree(TEST_DIR)

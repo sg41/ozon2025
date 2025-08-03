@@ -25,10 +25,30 @@ func main() {
 	in = bufio.NewReader(os.Stdin)
 	out = bufio.NewWriter(os.Stdout)
 	defer out.Flush()
-	var t, n int
+	var t, width, height int
+	var spaceBuffer, dashBuffer string
+	for i := 0; i < 200; i++ {
+		spaceBuffer += " "
+		dashBuffer += "_"
+	}
 	fmt.Fscan(in, &t)
 	for i := 0; i < t; i++ {
-		fmt.Fscan(in, &n)
-		fmt.Fprintln(out, n)
+		fmt.Fscan(in, &width, &height)
+		for i := 0; i < height*2+1; i++ {
+			if i == 0 {
+				fmt.Fprint(out, spaceBuffer[0:height]+dashBuffer[0:width]+"\n")
+				continue
+			}
+			if i == height*2 {
+				fmt.Fprint(out, spaceBuffer[0:height-1]+"\\"+dashBuffer[0:width]+"/\n")
+				continue
+			}
+			if i <= height {
+				fmt.Fprint(out, spaceBuffer[0:height-i]+"/"+spaceBuffer[0:width+2*i-2]+"\\\n")
+				continue
+			}
+			fmt.Fprint(out, spaceBuffer[0:i-height-1]+"\\"+spaceBuffer[0:width+(2*height-i)*2]+"/\n")
+		}
+		out.Flush()
 	}
 }
