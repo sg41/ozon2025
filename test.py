@@ -24,6 +24,7 @@ if __name__ == '__main__':
                 exit()
         else:
             print("No such file or directory: " + args.file + ".go")
+            exit()
                 
 
         if os.path.exists(TEST_DIR):
